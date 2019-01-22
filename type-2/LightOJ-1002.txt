@@ -1,0 +1,70 @@
+#include <bits/stdc++.h> 
+
+using namespace std; 
+
+int MinimumPath(int dist[], bool visited[], int nodes) {
+  int min = INT_MAX, mi;
+  for (int i = 0; i < nodes; i++) {
+    if (!visited[i] && dist[i] <= min) {
+      min = dist[i];
+      mi = i;
+    }
+  }
+  return mi;
+}
+
+int dijkstra(int arr[][502], vector<vector<int>> g, int nodes, int start, int end) {
+  int dist[nodes];
+  bool visited[nodes];
+  for (int k = 0; k < nodes; k++) {
+    visited[k] = false;
+    dist[k] = INT_MAX;
+  }
+  dist[start] = 0;
+  for (int i = 0; i < nodes - 1; i++) {
+    int u = MinimumPath(dist, visited, nodes);
+    visited[u] = true;
+    for (auto j = g[u].begin(); j != g[u].end(); j++) {
+      if (!visited[*j] && arr[u][*j] && dist[u] != INT_MAX) {
+        if (dist[u] < arr[u][*j] && arr[u][*j] < dist[*j])
+            dist[*j] = arr[u][*j];
+        else if(dist[u] > arr[u][*j] && dist[u] < dist[*j])
+            dist[*j] = dist[u];
+      }
+    }
+  }
+  return dist[end];
+}
+
+int main() {
+  int t,x=1;
+  scanf("%d", &t);
+  while (t--) {
+    int arr[502][502]={0},n, m, end, mm;
+    vector<vector<int>>g;
+    scanf("%d %d",&n,&m);
+    g.assign(n,vector<int>());
+    for (int i = 0; i < m; i++) {
+      int u, v, w;
+      scanf("%d %d %d",&u,&v,&w);
+      int t;
+      if (arr[u][v] > w || arr[u][v] == 0) {
+        arr[u][v] = w;
+        g[u].push_back(v);
+        g[v].push_back(u);
+        arr[v][u] = w;
+      }
+    }
+    scanf("%d",&end);
+    printf("Case %d:\n",x);
+    for(int i=0; i < n; i++){
+        mm=dijkstra(arr, g, n, i, end);
+        if(mm == INT_MAX)
+            printf("Impossible\n");
+        else
+            printf("%d\n",mm); 
+    }
+    x++;
+  }
+  return 0;
+}
