@@ -1,0 +1,25 @@
+#include<stdlib.h>
+#include<stdio.h>
+#include<string.h>
+
+long int cmpfunc (const void * a, const void * b) {
+   return ( *(long int*)a - *(long int*)b );
+}
+
+int main()
+{
+    long int n,arr[100009],i;
+    scanf("%ld",&n);
+    for(i=0; i < n; i++){
+        scanf("%ld",&arr[i]);
+    }
+    qsort(arr, n, sizeof(arr[0]), cmpfunc);
+    for(i=0; i < n-2; i++){
+        if(arr[i]+arr[i+1]>arr[i+2]){
+            printf("YES");
+            break;
+        }
+    }
+    if(i >= n-2)
+        printf("NO");
+}
