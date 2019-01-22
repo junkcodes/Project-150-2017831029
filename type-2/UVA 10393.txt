@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef struct{
+    int l;
+    char x[200];
+}string;
+
+int cmpstr(const void* a, const void* b){
+    const string *aa = a;
+    const string *bb = b;
+    return strcmp(aa->x, bb->x);
+}
+
+int main() {
+    int f,l;
+    string s[1010];
+    while(scanf("%d %d\n",&f,&l) > 0){
+        int a[27]={1,4,3,3,3,4,4,7,8,7,8,9,7,7,9,10,1,4,2,4,7,4,2,2,7,1},i=0,x,y;
+        while(i<f){
+            scanf("%d\n",&x);
+            int j=0;
+            while(j<26){
+                if(a[j] == x)
+                    a[j]=0;
+                j++;
+            }
+            i++;
+        }
+        i=0; x=0; y=100;
+        while(i<l){
+            scanf("%s\n",s[i].x);
+            s[i].l=strlen(s[i].x);
+            if(s[i].l > x)
+                x=s[i].l;
+            if(s[i].l < y)
+                y=s[i].l;
+            i++;
+        }
+        qsort (s, l, sizeof(string), cmpstr);
+        while(x >= y){
+            int z=0, b[1005],c=0; i=0;
+            while(i<l){
+                if(s[i].l == x){
+                    c=1;
+                    int j=0, q;
+                    while(j < s[i].l){
+                        q=s[i].x[j]-97;
+                        if(a[q] == 0)
+                            break;
+                        j++;
+                    }
+                    if( j == s[i].l ){
+                        int w=0;
+                        while(w<z){
+                            if(strcmp(s[b[w]].x,s[i].x) == 0)
+                                break;
+                            w++;
+                        }
+                        if(w == z){
+                             b[z]=i;
+                             z++;
+                        }
+                    }     
+                }
+                i++;             
+            }
+            if(x == y && z == 0) 
+                printf("%d\n",z);
+            if(z > 0 ){
+                printf("%d\n",z);
+                i=0;
+                while(i<z){
+                    printf("%s\n",s[b[i]].x); 
+                    i++;
+                }
+                break;
+            }
+            x--;
+        }
+    }
+    return 0;
+}
