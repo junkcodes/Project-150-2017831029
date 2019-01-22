@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+void cmp(char s1[],char s2[], int x){
+    int l1=strlen(s1),j=0,c=0,i=0;
+    char s3[10000];
+    for(i=0; i<=l1 ; i++){
+        if(s1[i] != 32){
+            s3[j]=s1[i];
+            j++;
+        }
+        if(s1[i] == 32){
+            c++;
+        } 
+    }
+    if(c > 0){ 
+        if(strcmp(s3,s2) == 0 )
+             printf("Case %d: Output Format Error\n",x/2);
+        else
+            printf("Case %d: Wrong Answer\n",x/2);   
+    }
+        
+    else{
+        if(strcmp(s1,s2) == 0 )
+             printf("Case %d: Yes\n",x/2);
+        else
+            printf("Case %d: Wrong Answer\n",x/2);
+    }
+}
+struct {
+    char x[10000];
+}s[50];
+
+int main(){
+    int n,i;
+    scanf("%d\n",&n);
+    for(i=1; i<=n*2; i++){
+         gets(s[i].x);
+         if(i%2==0)
+             cmp(s[i-1].x,s[i].x,i);
+    }
+}
