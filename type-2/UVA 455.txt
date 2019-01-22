@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int bal(char s[]){
+    int i=0,j,x=strlen(s),y=1;
+    while(y <= x/2){
+        i=0;
+        if(x%y ==0){
+            i=0;
+            while(i <= x-(2*y)){
+             for(j=0; j < y; j++){
+                if(s[i+j] != s[i+j+y]){
+                   break;
+                }
+            }
+            if(j != y){
+                break;
+            }
+            else
+               i+=y;
+        }
+      }
+     if(i > x-(2*y)){
+        printf("%d\n",y);
+        break;
+     }
+    y++;
+    }
+     if(y > x/2)
+       printf("%d\n",x);
+    return 1;
+}
+
+int main()
+{   int a;
+    char s[10010];
+    scanf("%d\n",&a);
+    while(a > 0){
+        scanf("%s\n",s);
+        if(bal(s) && a > 1)
+            puts("");
+        a--;
+    }
+    return 0;
+}
