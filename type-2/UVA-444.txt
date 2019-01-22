@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main()
+{   int a=0;
+    char r[1000], holes[1000];
+    int l,d;
+    while(gets(holes)){
+        l=strlen(holes)-1;
+        a=0;
+        while(l>=0){
+              d=0;
+              if(holes[l] > 47 && holes[l] < 58){
+                   d=(holes[l]-'0')*10;
+                   d+=holes[l-1]-'0';
+                   if(d > 12){
+                      r[a]=d;
+                      l-=2;
+                   }
+                   else{
+                     d= d*10 + holes[l-2]-'0';
+                     r[a]=d;
+                     l-=3;
+                   }
+                   a++;
+               }
+               else{
+                   d=holes[l];
+                   r[a]=d%10+48;
+                   a++;
+                   if(d/10 < 10){
+                      r[a]=d/10+48;
+                      a++;
+                      }
+                    else{
+                         d/=10;
+                         r[a]=d%10+48;
+                         a++;
+                         r[a]=d/10+48;
+                         a++;
+                    }
+                   l--;
+               }
+        }
+
+            r[a]='\0';
+            printf("%s\n",r);
+
+    }
+
+}
