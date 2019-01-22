@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main()
+{   
+    char s[1010];
+    while(gets(s)){
+        int ar[27]={0},br[27]={0};
+        for(int i=0; i < strlen(s); i++){
+            ar[s[i]-97]++;
+        }       
+        gets(s);
+        for(int i=0; i < strlen(s); i++){
+            br[s[i]-97]++;
+        }
+        for(int i=0; i < 26; i++){
+            for(int j=0; j < ar[i] && j < br[i]; j++){
+                printf("%c",i+97);
+            }
+        }
+        printf("\n");
+    }
+    return 0;
+}
