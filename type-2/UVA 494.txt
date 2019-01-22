@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main()
+{   
+    char s[50010];
+    int z=0;
+    while(fgets(s,50000,stdin)){
+            z=0;
+            for(int i=0,c=0; i <= strlen(s); i++){
+                if((s[i] < 65 || ( s[i] > 90 && s[i] < 97) ||  s[i] > 122)){
+                    if(c > 0) 
+                        z++;
+                    c=0;
+                    continue;
+                }
+                if((s[i] > 64 && s[i] < 91) || (s[i] > 96 && s[i] < 123)){
+                    c++;
+                }
+            }
+        printf("%d\n",z);
+    }
+    return 0;
+}
