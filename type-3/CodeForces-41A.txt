@@ -1,0 +1,27 @@
+#include<stdlib.h>
+#include<stdio.h>
+#include<string.h>
+
+char *strrev(char *str){
+    int i = strlen(str) - 1, j = 0;
+    char ch;
+    while (i > j){
+        ch = str[i];
+        str[i] = str[j];
+        str[j] = ch;
+        i--;
+        j++;
+    }
+    return str;
+}
+
+int main()
+{
+    char s[200],x[200];
+    gets(s);
+    gets(x);
+    if( strcmp (strrev(s),x) == 0)
+        printf("YES");
+    else
+        printf("NO");
+}
