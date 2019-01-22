@@ -1,0 +1,33 @@
+#include<stdlib.h>
+#include<stdio.h>
+#include<string.h>
+
+
+int main()
+{
+    long long int cc,pc,cclowj=2000000000,cchighi=0,pclowj=2000000000,pchighi=0;
+    scanf("%lld",&cc);
+    while(cc--){
+        long long int i,j;
+        scanf("%lld %lld",&i,&j);
+        if(cclowj > j)
+            cclowj=j;
+        if(cchighi < i)
+            cchighi=i;
+    }
+    scanf("%lld",&pc);
+    while(pc--){
+        long long int i,j;
+        scanf("%lld %lld",&i,&j);
+        if(pclowj > j)
+            pclowj=j;
+        if(pchighi < i)
+            pchighi=i;
+    }
+    if((pchighi-cclowj)>=0 && (cchighi-pclowj) <= (pchighi-cclowj))
+        printf("%lld",pchighi-cclowj);
+    else if((cchighi-pclowj)>=0 && (cchighi-pclowj) >= (pchighi-cclowj))
+        printf("%lld",cchighi-pclowj);
+    else
+        printf("0");
+}
