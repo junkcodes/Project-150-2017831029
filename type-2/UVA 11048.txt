@@ -1,0 +1,109 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+struct {
+    int l;
+    char x[10000];
+}dw[11000];
+
+struct {
+    int l;
+    char x[10000];
+}qw[1100];
+
+void check(int q, int d){
+    int m=0,r1=-1,r2=-1,r3=-1,r4=-1,i;
+    for(i=0; i < d; i++){
+        if( qw[q].l == dw[i].l){
+            int c=0;
+            for(int j=0; j < dw[i].l; j++){
+                if(qw[q].x[j] != dw[i].x[j])
+                    c++;
+                if(c > 1)
+                    break;
+            }
+            if(c == 0){
+                printf("%s is correct\n",qw[q].x);
+                break;
+            }
+            if(c == 1 && m == 0){
+                m=1; r3=i;
+            }
+            else
+                c=0;
+            for(int j=0; j < dw[i].l && m == 0; j++){
+                if(qw[q].x[j] != dw[i].x[j] ){
+                    if(qw[q].x[j] == dw[i].x[j+1] && qw[q].x[j+1] == dw[i].x[j]){
+                        c++;
+                        j++;
+                    }
+                    else
+                        c++;
+                }
+                if(c > 1)
+                    break;
+            }
+            if(c == 1 && m == 0){
+                m=1; r4=i;
+            }
+        }
+        else if(qw[q].l == dw[i].l+1 && m==0){
+            int c=0;
+            for(int j=0, k=0; j < qw[q].l; j++, k++){
+                if(qw[q].x[j] != dw[i].x[k]){
+                    c++;
+                    if(c == 1)
+                        k--;
+                }
+                if(c > 1)
+                    break;
+            }
+            if(c == 1){
+                m=1; r1=i;
+            }
+        }
+        else if( qw[q].l == dw[i].l-1 && m==0){
+            int c=0;
+            for(int j=0, k=0; j < dw[i].l; j++, k++){
+                if(qw[q].x[k] != dw[i].x[j]){
+                    c++;
+                    if(c == 1)
+                        k--;
+                }
+                if(c > 1)
+                    break;
+            }
+            if(c == 1){
+                m=1; r2=i;
+            }
+        }
+    }
+    if(r1 > -1 && i == d) 
+        printf("%s is a misspelling of %s\n",qw[q].x,dw[r1].x);
+    if(r2 > -1 && i == d) 
+        printf("%s is a misspelling of %s\n",qw[q].x,dw[r2].x);
+    if(r3 > -1 && i == d) 
+        printf("%s is a misspelling of %s\n",qw[q].x,dw[r3].x);
+    if(r4 > -1 && i == d) 
+        printf("%s is a misspelling of %s\n",qw[q].x,dw[r4].x);
+    if( r1 == -1 && r2 == -1 && r3 == -1 && r4 == -1 && i == d)
+        printf("%s is unknown\n",qw[q].x);
+}
+
+int main() {
+    int d,q;
+    while(scanf("%d\n",&d) > 0){
+        for(int i=0; i<d; i++){ 
+            scanf("%s\n",dw[i].x);
+            dw[i].l=strlen(dw[i].x);
+        }
+        scanf("%d\n",&q);
+        for(int i=0; i<q; i++){
+            scanf("%s\n",qw[i].x);
+            qw[i].l=strlen(qw[i].x);
+            check(i,d);
+        }
+    }
+    return 0;
+}
