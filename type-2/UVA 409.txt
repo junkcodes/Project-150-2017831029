@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct {
+    int l;
+    char x[225];
+}p[26];
+
+struct {
+    int l;
+    char x[290];
+}y[26];
+
+int cmp(char a[], int m, int k){
+       int i=0;
+       while(i<k){
+            if(m == p[i].l)
+                 if(strcmp(p[i].x,a) == 0){
+                      i=k+1;
+                      }
+            i++;
+       }
+       if (i>k)
+           return 1;
+       else
+           return 0;
+}
+
+int main()
+{
+     int k,s,set=0;
+     while(scanf("%d %d\n",&k,&s) > 0){
+           int i=0,a[s],min=100,max=0;
+           set++;
+           while(i<k){
+                gets(p[i].x);
+                p[i].l=strlen(p[i].x);
+                if(p[i].l>max)
+                     max=p[i].l;
+                if(p[i].l<min)
+                     min=p[i].l;
+                i++;
+           }
+           i=0;
+           int d=0;
+           while(i<s){
+              a[i]=0;
+              gets(y[i].x);
+              y[i].l=strlen(y[i].x);
+              int j=0,m=0;
+              char s1[1000];
+              while(j <= y[i].l){
+                  if(y[i].x[j] > 64){
+                       if(y[i].x[j] < 91){
+                            s1[m] =y[i].x[j]+32;
+                            m++;
+                        }
+                       else{
+                            s1[m] =y[i].x[j];
+                            m++;
+                        }
+                   }
+                   else{
+                        s1[m]='\0';
+                        if(m >= min && m <= max){
+                              if(cmp(s1,m,k))
+                                  a[i]++;
+                                  if(a[i] > d)
+                                     d = a[i];
+                        }
+                        m=0;
+                   }
+                   j++;
+              }
+              i++;
+           }
+           printf("Excuse Set #%d\n",set);
+           i=0;
+           while(i<s){
+              if( a[i] == d && d > 0){
+                  puts(y[i].x);
+                  }
+              i++;
+           }
+           printf("\n");
+     }
+     return 0;
+}
