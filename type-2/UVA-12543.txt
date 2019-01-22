@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+struct {
+    int p;
+    char z[200];
+}w;
+
+void check(char s[]){
+    int l=strlen(s);
+    char x[200];
+    if(l > w.p && l <= 100){
+        for(int i=0,j=0; i<=l; i++){
+            if(s[i] > 64 && s[i] < 91){
+                x[j]=s[i]+32;
+                j++;
+            }
+            else if((s[i] > 96 && s[i] < 123) || s[i] == '\0'){
+                x[j]=s[i];
+                j++;
+            }
+            else if(s[i] == '-' && j > 0 ){
+                    x[j]=s[i];
+                    j++;
+            }
+        }
+        int q=strlen(x);
+        if(q > w.p){
+            w.p=q;
+            strcpy(w.z,x);
+        }
+    }
+}
+
+int main()
+{
+    char s[50010],x[200];
+    w.p=0;
+    while(scanf("%s",s) > 0){
+            for(int i=0,c=0; i <= strlen(s); i++){
+                if((s[i] < 65 || ( s[i] > 90 && s[i] < 97) ||  s[i] > 122) && s[i] != '-'){
+                    x[c]='\0';
+                    if(c > 0) 
+                        check(x);
+                    c=0;
+                    continue;
+                }
+                if(s[i] == '-' && (s[i+1] < 65 || ( s[i+1] > 90 && s[i+1] < 97) || s[i+1] > 122)){
+                    x[c]='\0';
+                    if(c > 0)
+                        check(x);
+                    c=0;
+                    continue;
+                }
+                if((s[i] > 64 && s[i] < 91) || (s[i] > 96 && s[i] < 123) || s[i] == '-'){
+                    x[c]=s[i];
+                    c++;
+                }
+            }
+    }
+    puts(w.z);
+    return 0;
+}
