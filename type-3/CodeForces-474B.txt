@@ -1,0 +1,23 @@
+#include<stdlib.h>
+#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+    long int n,x,c=0,i=1,arr[1000010];
+    scanf("%ld",&n);
+    while(n--){
+        scanf("%ld",&x);
+        c++;
+        int tmp=i+x;
+        while(i < tmp){
+            arr[i]=c;
+            i++;
+        }
+    }
+    scanf("%ld",&n);
+    while(n--){
+        scanf("%ld",&x);
+        printf("%ld\n",arr[x]);
+    }
+}
